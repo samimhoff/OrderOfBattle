@@ -7,20 +7,28 @@ import { Weapons } from './components/weapons/Weapons'
 import { Units } from './components/unit/Unit';
 import { AddUnit } from './components/unit/addUnit/AddUnit';
 import { ErrorPage } from './components/ErrorPage';
+import { SideBar } from './components/SideBar';
 //components 
 
 
 export const App = () => {
   return (
     <Router>
+      <div className="wrapper">
+
+      
       <NavBar />
+      <SideBar />
+      <div className="mainbar">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/weapons" element={<Weapons />} />
         <Route path="/units" element={<Units />} /> 
         <Route path="/units/add" element={<AddUnit />} />
         <Route path="*" element={<ErrorPage />}/>
-      </Routes>  
+      </Routes>
+      </div>  
+      </div>
     </Router>
   );
 }

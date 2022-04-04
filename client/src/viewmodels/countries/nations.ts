@@ -19,7 +19,8 @@ export enum NationsList {
     vichyFrance = "Vichy France",
     romania = "Romania",
     finland = "Finland",
-    norway = "Norway"
+    norway = "Norway",
+    greece = "Greece"
 }
 
 export const Nations: {[name: string]: INation} = {
@@ -75,6 +76,10 @@ export const Nations: {[name: string]: INation} = {
     },
     norway: {
         name: "Norway",
+        faction: Faction.allies
+    },
+    greece: {
+        name: "Greece",
         faction: Faction.allies
     }
 }

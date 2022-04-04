@@ -1,4 +1,11 @@
-export const Role = {
+export interface IRole {
+    name: string
+}
+
+export const Role: {[name: string]: IRole} = {
+    standard: {
+        name: "Standard"
+    },
     artilery: {
         name: "Artillery"
     },
@@ -18,7 +25,7 @@ export const Role = {
         name: "Reconnaissance"
     },
     antiAircraft: {
-        name: "Anti=aircraft"
+        name: "Anti-aircraft"
     },
     light: {
         name: "Light"

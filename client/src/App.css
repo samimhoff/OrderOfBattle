@@ -28,6 +28,10 @@
   color: #61dafb;
 }
 
+body {
+  height: 100%;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,4 +39,37 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.wrapper {
+  min-height: 100%;
+  position: relative;
+}
+
+.sidebar {
+  display: inline-block;
+	vertical-align: top;
+  min-height: 100% !important;
+	height: 100% !important;
+	width: 18%;
+	overflow: auto;
+  border: #27739d 2px solid;
+}
+
+.mainbar {
+  display: inline-block;
+	vertical-align: top;
+	height: 100%;
+	width: 70%;
+	overflow: auto;
+}
+
+.coloration {
+  background-color: #27739d !important;
+  border: white 2px solid;
+}
+
+nav a {
+  color: white !important;
+  text-shadow: #282c34 2px 1px;
 }

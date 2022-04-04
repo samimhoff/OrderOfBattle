@@ -20,9 +20,8 @@ CREATE TABLE unit(
     theater VARCHAR(250) NOT NULL,
     size VARCHAR(150) NOT NULL, 
     size_index real NOT NULL, 
-    branch VARCHAR(250) NOT NULL,
+    mobility VARCHAR(250) NOT NULL,
     role VARCHAR(250) NOT NULL,
-    arm VARCHAR(250),
     specialization VARCHAR(250),
     date DATE NOT NULL,
     description TEXT
