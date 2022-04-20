@@ -1,6 +1,7 @@
 DROP DATABASE IF EXISTS orderofbattle
 CREATE DATABASE orderofbattle
 
+DROP TABLE IF EXISTS client;
 DROP TABLE IF EXISTS unit;
 DROP TABLE IF EXISTS unit_individual;
 DROP TABLE IF EXISTS unit_weapon;
@@ -12,6 +13,14 @@ DROP TABLE IF EXISTS individual_equipment;
 DROP TABLE IF EXISTS vehicle;
 DROP TABLE IF EXISTS equipment;
 DROP TABLE IF EXISTS weapon;
+
+
+CREATE TABLE client(
+    client_id SERIAL PRIMARY KEY NOT NULL,
+    username VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL
+)
+
 
 
 CREATE TABLE unit(
