@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+#secrets
+secretTokens.js
+
 # production
 /build
 

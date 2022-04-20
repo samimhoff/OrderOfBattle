@@ -23,66 +23,31 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(session({
-    secret: "secretcode",
-    resave: true,
-    saveUninitialized: true
-}))
 
-app.use(cookieParser("secretcode"))
-
-
-
-
-//ROUTES//
-
-//===================================================================
-//----------------------------LOGIN/ AUTH----------------------------
-//===================================================================
-
-//***NOTE: the table for user is client (client_id, username, password) */
-
-app.post("/login/", (req, res) => {
-    try {
-        console.log(req.body);
-    } catch (error) {
-        console.error(error.message);
-    }
-})
-
-app.post("/register/", async(req, res) => {
-    const {username, password} = req.body;
-    try {
-        //check if username already exists
-        const existingUser = await pool.query(`SELECT * FROM client WHERE username = $1`, [username]);
-        console.log('existing user rows: ', existingUser.rows);
-        if (existingUser.length) {
-            console.log('user already exists in db');
-            res.json('User already exists. Try another username');
-        } else {
-            //hashing password:
-            const hashedPassword = await bcrypt.hash(password, 10);
-
-            const userPosted = await pool.query(`INSERT INTO client (username, password) VALUES ($1, $2)`, 
-                [username, hashedPassword]);
-            res.json("User posted!");    
-        }
-    } catch (error) {
-        console.error(error.message);
-    }
-})
-
-app.get("/users/all", async (req, res) => {
-    try {
-        const existingUsers = await pool.query(`SELECT * FROM client`);
-        res.json(existingUsers.rows)
-    } catch (error) {
-        console.error(error.message);
-    }
-})
 //===================================================================
 //----------------------------WEAPONS--------------------------------
 //===================================================================
+
+//GOOGLE AUTH
+
+app.get('/login/', (req, res) => {
+    try {
+        res.send('<a href="/auth/google">Authenticate with Google</a>');
+    } catch (error) {
+        console.error(error.message);
+    }
+})
+
+//protected route 
+
+app.get('/user/units', (req, res) => {
+    try {
+        res.send('hello!')
+    } catch (error) {
+        console.error(error.message);
+    }
+})
+
 
 app.post("/weapons/", async(req, res) => {
     try {
@@ -482,51 +447,57 @@ app.listen(5000, () => {
 
 module.exports = app;
 
-// const newestIndividualId = await pool.query(`SELECT unit_id FROM unit ORDER BY unit_id DESC LIMIT 1`)
-// const individualUnitPosted = await pool.query(`INSERT INTO unit_individual(unit_id,
-//     individual_id,
-//     leadership) VALUES ($1, $2, $3)`,
-//     [unitId,
-//     newestIndividualId,
-//     leadership]
-// )
-// const individualWeaponPosted = await pool.query(`INSERT INTO individual_weapon(individual_id,
-//     weapon_id,
-//     isPrimary) VALUES ($1, $2, $3)`,
-//     [newestIndividualId,
-//     weaponId,
-//     true]
-// )
-// console.log(individualPosted.rows);
-// console.log(individualUnitPosted);
-// console.log(individualWeaponPosted);
+// app.use(session({
+//     secret: "secretcode",
+//     resave: true,
+//     saveUninitialized: true
+// }))
 
+// app.use(cookieParser("secretcode"))
 
+//ROUTES//
 
-// const {
-//     generic_name,
-//     role,
-//     nation,
-//     leadership,
-//     rank,
-//     rank_index,
-//     description,
-//     weaponId,
-//     unitId
-// } = req.body;
-// console.log(req.body);
-// const individualPosted = await pool.query(`INSERT INTO individual(generic_name,
-//     role,
-//     nation,
-//     leadership,
-//     rank,
-//     rank_index,
-//     description) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-//     [generic_name,
-//     role,
-//     nation,
-//     leadership,
-//     rank,
-//     rank_index,
-//     description]
-// )
+//===================================================================
+//----------------------------LOGIN/ AUTH----------------------------
+//===================================================================
+
+//***NOTE: the table for user is client (client_id, username, password) */
+
+// app.post("/login/", (req, res) => {
+//     try {
+//         console.log(req.body);
+//     } catch (error) {
+//         console.error(error.message);
+//     }
+// })
+
+// app.post("/register/", async(req, res) => {
+//     const {username, password} = req.body;
+//     try {
+//         //check if username already exists
+//         const existingUser = await pool.query(`SELECT * FROM client WHERE username = $1`, [username]);
+//         console.log('existing user rows: ', existingUser.rows);
+//         if (existingUser.length) {
+//             console.log('user already exists in db');
+//             res.json('User already exists. Try another username');
+//         } else {
+//             //hashing password:
+//             const hashedPassword = await bcrypt.hash(password, 10);
+
+//             const userPosted = await pool.query(`INSERT INTO client (username, password) VALUES ($1, $2)`, 
+//                 [username, hashedPassword]);
+//             res.json("User posted!");    
+//         }
+//     } catch (error) {
+//         console.error(error.message);
+//     }
+// })
+
+// app.get("/users/all", async (req, res) => {
+//     try {
+//         const existingUsers = await pool.query(`SELECT * FROM client`);
+//         res.json(existingUsers.rows)
+//     } catch (error) {
+//         console.error(error.message);
+//     }
+// })
