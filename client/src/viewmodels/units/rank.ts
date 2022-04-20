@@ -1,90 +1,96 @@
-export const Rank = {
-    private: {
+export interface IRank {
+    name: string,
+    hierarchy: number,
+    isOfficer: boolean
+}
+
+export const Rank: {[name: string]: IRank} = {
+    "Private": {
         name: "Private",
         hierarchy: 0,
         isOfficer: false
     },
-    corporal: {
+    "Corporal": {
         name: "Corporal",
-        hieararchy: 1,
+        hierarchy: 1,
         isOfficer: false,
     },
-    sergeant: {
+    "Sergeant": {
         name: "Sergeant",
         hierarchy: 2,
         isOfficer: false
     },
-    staffSergeant: {
+    "Staff Sergeant": {
         name: "Staff Sergeant",
         hierarchy: 3,
         isOfficer: false
     },
-    technicalSergeant: {
+    "Technical Sergeant": {
         name: "Technical Sergeant",
         hierarchy: 4,
         isOfficer: false
     },
-    firstSergeant: {
+    "First Sergeant": {
         name: "First Sergeant",
         hierarchy: 5,
         isOfficer: false
     },
-    masterSergeant: {
+    "Master Sergeant": {
         name: "Master Sergeant",
         hierarchy: 6,
         isOfficer: false
     },
-    secondLieutenant: {
+    "Second Lieutenant": {
         name: "Second Lieutenant",
         hierarchy: 3,
         isOfficer: true
     },
-    firstLieutenant: {
+    "First Lieutenant": {
         name: "First Lieutenant",
         hierarchy: 3,
         isOfficer: true
     },
-    captain: {
+    "Captain": {
         name: "Captain",
         hierarchy: 4,
         isOfficer: true
     },
-    major: {
+    "Major": {
         name: "Major",
         hierarchy: 4,
         isOfficer: true
     },
-    lieutenantColonel: {
+    "Lieutenant Colonel": {
         name: "Lieutenant Colonel",
         hierarchy: 5,
         isOfficer: true
     },
-    colonel: {
+    "Colonel": {
         name: "Colonel",
         hierarchy: 6,
         isOfficer: true
     },
-    brigadierGeneral: {
+    "Brigadier General": {
         name: "Brigadier General",
         hierarchy: 7,
         isOfficer: true
     },
-    majorGeneral: {
+    "Major General": {
         name: "Major General",
         hierarchy: 8,
         isOfficer: true
     },
-    lieutenantGeneral: {
+    "Lieutenant General": {
         name: "Lieutenant General",
         hierarchy: 9,
         isOfficer: true
     },
-    general: {
+    "General": {
         name: "General",
         hierarchy: 10,
         isOfficer: true
     },
-    generalOfTheArmy: {
+    "General of the Army": {
         name: "General of the Army",
         hierarchy: 11,
         isOfficer: true

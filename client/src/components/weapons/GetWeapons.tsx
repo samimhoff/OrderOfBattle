@@ -39,7 +39,7 @@ export const GetWeapons = (props: any) => {
             let data = i.toString();
             let dataTarget = "#" + i.toString();
             const currentRow = [
-                <tr>
+                <tr key={i}>
                     <td>
                         <img style={{width: "130px"}} src={row.photo} alt="" />
                     </td>
@@ -80,9 +80,15 @@ export const GetWeapons = (props: any) => {
                         </div>
                     </td>
                     <td className="pt-1 px-1">
-                        <button type="button" className='btn btn-secondary mx-0' onClick={() => {props.retrieveWeapon(row.weapon_id)}}>
+                        {props.retrieveWeapon != undefined ? 
+                        <button type="button" className='btn btn-primary mx-0' onClick={() => {props.retrieveWeapon(row.weapon_id, row.name)}}>
+                            Select
+                        </button>
+                        :
+                        <button type="button" className='btn btn-secondary mx-0' onClick={() => {props.retrieveWeapon(row.weapon_id, row.name)}}>
                             Edit
                         </button>
+                        }
                     </td>
                     <td className=" pt-1 pl-0"> 
                         <button type="button" className='btn btn-danger mx-0' onClick={() => deleteWeapon(row.weapon_id)}>
@@ -94,7 +100,6 @@ export const GetWeapons = (props: any) => {
             allRows.push(currentRow);
         })
         setAllRows(allRows);
-        console.log(allRows);
         return allRows;
     }
     

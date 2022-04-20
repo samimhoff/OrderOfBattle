@@ -11,3 +11,89 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100vh;
+}
+
+
+/*REOCURRING STYLING THROUGHOUT*/
+.underline-input {
+  outline: 0; 
+  border-width: 0 0 2px;
+  border-color: rgba(0, 0, 0, .3);
+  font-size: 20px;
+  font-style: italic;
+  text-align: center;
+}
+
+.help-text {
+  color:rgba(0, 0, 0, .7);
+  font-size: 1em;
+}
+
+/* MAIN */
+.main {
+  display: flex;
+  height: 100vh
+}
+
+
+/* SIDEBAR */
+
+.sidebar {
+  width: 15%;
+  flex-shrink: 0;
+  background-color: rgba(22, 22, 22, 0.9);
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebar-item {
+  padding: .75em 1em;
+  color: white;
+  text-decoration: none;
+  display: block;
+  border-bottom: 1px solid white;
+}
+
+.sidebar-item:hover{
+  background-color: rgba(255, 255, 255, .1);
+}
+
+.sidebar-title {
+  display: flex;
+  font-size: 1.1em;
+  justify-content: space-between;
+}
+
+.sidebar-title span i {
+  display: inline-block;
+  width: 1.5em;
+}
+
+.sidebar-item .toggle-btn {
+  cursor: pointer;
+  transition: transform .3s;
+}
+
+.sidebar-item.open .sidebar-title .toggle-btn {
+  transform: rotate(180deg);
+}
+
+.sidebar-content {
+  padding-top: .35em;
+  height: 0;
+  overflow: hidden;
+}
+
+.sidebar-item.open .sidebar-content {
+  height: auto;
+}
+

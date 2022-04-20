@@ -6,7 +6,7 @@ export const Weapons = () => {
 
     const [editWeapon, setEditWeapon] = useState(null);
     
-    const changeWeaponId = (id: any) => {
+    const changeWeaponId = (id: any, name: any) => {
         setEditWeapon(id);
     }
 

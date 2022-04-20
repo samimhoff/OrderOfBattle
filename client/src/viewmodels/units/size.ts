@@ -4,55 +4,55 @@ export interface ISize {
 }
 
 export const Size: {[name: string]: ISize} = {
-    fireteam: {
+    "Fireteam": {
         name: "Fireteam",
         hierarchy: 1
     },
-    hq: {
+    "Headquarters": {
         name: "Headquarters",
         hierarchy: 1
     },
-    squad: {
+    "Squad": {
         name: "Squad",
         hierarchy: 2,
     },
-    platoon: {
+    "Platoon": {
         name: "Platoon",
         hierarchy: 3,
     },
-    company: {
+    "Company": {
         name: "Company",
         hierarchy: 4,
     },
-    battalion: {
+    "Battalion": {
         name: "Battalion",
         hierarchy: 5,
     },
-    regiment: {
+    "Regiment": {
         name: "Regiment",
         hierarchy: 6,
     },
-    brigade: {
+    "Brigade": {
         name: "Brigade",
         hierarchy: 7,
     },
-    division: {
+    "Division": {
         name: "Division",
         hierarchy: 8,
     },
-    corps: {
+    "Corps": {
         name: "Corps",
         hierarchy: 9,
     },
-    army: {
+    "Army": {
         name: "Army",
         hierarchy: 10,
     },
-    armyGroup: {
+    "Army Corps": {
         name: "Army Corps",
         hierarchy: 11,
     },
-    theater: {
+    "Theater": {
         name: "Theater",
         hierarchy: 12,
     },

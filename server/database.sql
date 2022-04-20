@@ -1,4 +1,5 @@
-CREATE DATABASE orderofbattle;
+DROP DATABASE IF EXISTS orderofbattle
+CREATE DATABASE orderofbattle
 
 DROP TABLE IF EXISTS unit;
 DROP TABLE IF EXISTS unit_individual;
@@ -8,9 +9,10 @@ DROP TABLE IF EXISTS unit_equipment;
 DROP TABLE IF EXISTS individual;
 DROP TABLE IF EXISTS individual_weapon;
 DROP TABLE IF EXISTS individual_equipment;
-DROP TABLE IF EXISTS weapon;
 DROP TABLE IF EXISTS vehicle;
 DROP TABLE IF EXISTS equipment;
+DROP TABLE IF EXISTS weapon;
+
 
 CREATE TABLE unit(
     unit_id SERIAL PRIMARY KEY NOT NULL,
@@ -19,66 +21,14 @@ CREATE TABLE unit(
     nation VARCHAR(250) NOT NULL,
     theater VARCHAR(250) NOT NULL,
     size VARCHAR(150) NOT NULL, 
-    size_index real NOT NULL, 
+    size_index INT NOT NULL, 
     mobility VARCHAR(250) NOT NULL,
     role VARCHAR(250) NOT NULL,
     specialization VARCHAR(250),
     date DATE NOT NULL,
     description TEXT
-)
+);
 
-CREATE TABLE unit_relation(
-    unit_relation_id SERIAL PRIMARY KEY,
-    count INTEGER,
-    unit_owner_id INTEGER 
-        REFERENCES unit (unit_id),
-    unit_belonger_id INTEGER
-        REFERNCES unit (unit_id)
-    CHECK (unit1_id != unit2_id)
-)
-
-CREATE TABLE unit_individual(
-    unit_id NOT NULL,
-    individual_id NOT NULL,
-    leadership VARCHAR(250),
-    PRIMARY KEY (unit_id, individual_id),
-    FOREIGN KEY (unit_id)
-        REFERENCES unit (unit_id)
-    FOREIGN KEY (individual_id)
-        REFERENCES individual (individual_id)
-) 
-
-CREATE TABLE unit_weapon(
-    unit_id NOT NULL,
-    weapon_id NOT NULL,
-    isPrimary BOOLEAN,
-    PRIMARY KEY (unit_id, weapon_id),
-    FOREIGN KEY (unit_id)
-        REFERENCES unit (unit_id)
-    FOREIGN KEY (weapon_id)
-        REFERENCES weapon (weapon_id)
-) 
-
-CREATE TABLE unit_vehicle(
-    unit_id NOT NULL,
-    vehicle_id NOT NULL,
-    PRIMARY KEY (unit_id, vehicle_id),
-    FOREIGN KEY (unit_id)
-        REFERENCES unit (unit_id)
-    FOREIGN KEY (vehicle_id)
-        REFERENCES vehicle (vehicle_id)
-) 
-
-CREATE TABLE unit_equipment(
-    individual_id NOT NULL,
-    unit_id NOT NULL,
-    isPrimary BOOLEAN,
-    PRIMARY KEY (unit_id, equipment_id),
-    FOREIGN KEY (unit_id)
-        REFERENCES unit (unit_id)
-    FOREIGN KEY (equipment_id)
-        REFERENCES equipment (equipment_id)
-)
 
 
 CREATE TABLE individual(
@@ -89,31 +39,10 @@ CREATE TABLE individual(
     nation VARCHAR(250) NOT NULL,
     leadership VARCHAR(100) NOT NULL,
     rank VARCHAR(250) NOT NULL,
-    rank_index real NOT NULL,
+    rank_index real,
     description TEXT
-)
+);
 
-CREATE TABLE individual_weapon(
-    individual_id NOT NULL,
-    weapon_id NOT NULL,
-    isPrimary BOOLEAN,
-    PRIMARY KEY (individual_id, weapon_id),
-    FOREIGN KEY (individual_id)
-        REFERENCES individual (individual_id)
-    FOREIGN KEY (weapon_id)
-        REFERENCES weapon (weapon_id)
-) 
-
-CREATE TABLE individual_equipment(
-    individual_id NOT NULL,
-    equipment_id NOT NULL,
-    isPrimary BOOLEAN,
-    PRIMARY KEY (individual_id, equipment_id),
-    FOREIGN KEY (individual_id)
-        REFERENCES individual (individual_id)
-    FOREIGN KEY (equipment_id)
-        REFERENCES equipment (equipment_id)
-) 
 
 CREATE TABLE weapon(
     weapon_id SERIAL PRIMARY KEY NOT NULL,
@@ -146,11 +75,85 @@ CREATE TABLE vehicle(
     weight NUMERIC(10,2) NOT NULL,
     date DATE,
     description TEXT
-)
+);
 
 CREATE TABLE equipment(
     equipment_id SERIAL PRIMARY KEY NOT NULL,
     name VARCHAR(250) NOT NULL,
     role VARCHAR(250) NOT NULL,
     description TEXT
-)
+);
+
+CREATE TABLE unit_relation(
+    unit_relation_id SERIAL PRIMARY KEY,
+    count INTEGER,
+    unit_owner_id INTEGER REFERENCES unit (unit_id),
+    unit_belonger_id INTEGER REFERENCES unit (unit_id)
+    CHECK (unit_owner_id != unit_belonger_id)
+);
+
+CREATE TABLE unit_individual(
+    unit_id INT NOT NULL,
+    individual_id INT NOT NULL,
+    leadership VARCHAR(250),
+    PRIMARY KEY (unit_id, individual_id),
+    FOREIGN KEY (unit_id) 
+    REFERENCES unit (unit_id),
+    FOREIGN KEY (individual_id) 
+    REFERENCES individual (individual_id)
+); 
+
+CREATE TABLE unit_weapon(
+    unit_id INT NOT NULL,
+    weapon_id INT NOT NULL,
+    isPrimary BOOLEAN,
+    PRIMARY KEY (unit_id, weapon_id),
+    FOREIGN KEY (unit_id) 
+    REFERENCES unit (unit_id),
+    FOREIGN KEY (weapon_id) 
+    REFERENCES weapon (weapon_id)
+); 
+
+CREATE TABLE unit_vehicle(
+    unit_id INT NOT NULL,
+    vehicle_id INT NOT NULL,
+    PRIMARY KEY (unit_id, vehicle_id),
+    FOREIGN KEY (unit_id) 
+    REFERENCES unit (unit_id),
+    FOREIGN KEY (vehicle_id) 
+    REFERENCES vehicle (vehicle_id)
+);
+
+CREATE TABLE unit_equipment(
+    unit_id INT NOT NULL,
+    equipment_id INT NOT NULL,
+    isPrimary BOOLEAN,
+    PRIMARY KEY (unit_id, equipment_id),
+    FOREIGN KEY (unit_id) 
+    REFERENCES unit (unit_id),
+    FOREIGN KEY (equipment_id) 
+    REFERENCES equipment (equipment_id)
+);
+
+
+CREATE TABLE individual_weapon(
+    individual_id INT NOT NULL,
+    weapon_id INT NOT NULL,
+    isPrimary BOOLEAN,
+    PRIMARY KEY (individual_id, weapon_id),
+    FOREIGN KEY (individual_id) 
+    REFERENCES individual (individual_id),
+    FOREIGN KEY (weapon_id) 
+    REFERENCES weapon (weapon_id)
+); 
+
+CREATE TABLE individual_equipment(
+    individual_id INT NOT NULL,
+    equipment_id INT NOT NULL,
+    isPrimary BOOLEAN,
+    PRIMARY KEY (individual_id, equipment_id),
+    FOREIGN KEY (individual_id) 
+    REFERENCES individual (individual_id),
+    FOREIGN KEY (equipment_id) 
+    REFERENCES equipment (equipment_id)
+); 

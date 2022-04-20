@@ -32,17 +32,14 @@ export const AddWeapon = (props: any) => {
 
   const formatIncomingDate = (date: any) => {
     let formatted = date.split('').splice(0,10).join('');
-    console.log(formatted);
     return formatted;
   }
 
   const setEditWeaponState = async (id: any) => {
     try {
       let url = "http://localhost:5000/weapons/" + id;
-      console.log(url);
       const response = await fetch(url);
       const data = await response.json();
-      console.log('json data!', data);
       setName(data.name);
       setNation(data.nationoforigin);
       setWeaponType(data.weapontype);
@@ -99,7 +96,7 @@ export const AddWeapon = (props: any) => {
         method: "POST",
         headers: { "Content-Type": "application/json"},
         body: JSON.stringify(body)
-      })
+      });
     } catch (err: any) {
       console.error(err.message);
     }
@@ -117,7 +114,7 @@ export const AddWeapon = (props: any) => {
   const createNationSelection = (): any[] => {
     let nationsArray = [];
     for (const key in Nations) {
-      nationsArray.push(<option value={Nations[key].name}>{Nations[key].name}</option>)
+      nationsArray.push(<option key={key} value={Nations[key].name}>{Nations[key].name}</option>)
     }
     return nationsArray;
   }
@@ -142,7 +139,7 @@ export const AddWeapon = (props: any) => {
     let actions = ["Manual", "Semi-automatic", "Automatic"];
     let actionsArray: any = [];
     Object.values(actions).forEach((action) =>  {
-      actionsArray.push(<option value={action}>{action}</option>)
+      actionsArray.push(<option key={action} value={action}>{action}</option>)
     });
     return actionsArray;
   }
