@@ -28,27 +28,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 //----------------------------WEAPONS--------------------------------
 //===================================================================
 
-//GOOGLE AUTH
-
-app.get('/login/', (req, res) => {
-    try {
-        res.send('<a href="/auth/google">Authenticate with Google</a>');
-    } catch (error) {
-        console.error(error.message);
-    }
-})
-
-//protected route 
-
-app.get('/user/units', (req, res) => {
-    try {
-        res.send('hello!')
-    } catch (error) {
-        console.error(error.message);
-    }
-})
-
-
 app.post("/weapons/", async(req, res) => {
     try {
         const { 
@@ -293,7 +272,10 @@ app.post("/units/", async(req, res) => {
     }
 })
 
+
+//Add a unit to another unit:
 app.post("/units/:id", async(req, res) => {
+    const { id } = req.params;
     try {
         const {
             generic_name,
@@ -329,8 +311,13 @@ app.post("/units/:id", async(req, res) => {
             date,
             description]
         ) 
-        const retrieve = await pool.query(`SELECT unit_id FROM unit ORDER BY unit_id DESC LIMIT 1`)
-        res.json(retrieve.rows[0]);
+        //get ID newest unit posted
+        const newestUnitPosted = await pool.query(`SELECT unit_id FROM unit ORDER BY unit_id DESC LIMIT 1`)
+        const newestUnitId = newestUnitPosted.rows[0].unit_id;
+        console.log('newest Unit Id: ', newestUnitId);
+
+        const unitIntoUnitPosted = await pool.query(`INSERT INTO unit_relation `)
+
     } catch (error) {   
         console.error(error.message);
     }
@@ -497,6 +484,27 @@ module.exports = app;
 //     try {
 //         const existingUsers = await pool.query(`SELECT * FROM client`);
 //         res.json(existingUsers.rows)
+//     } catch (error) {
+//         console.error(error.message);
+//     }
+// })
+
+
+// //GOOGLE AUTH
+
+// app.get('/login/', (req, res) => {
+//     try {
+//         res.send('<a href="/auth/google">Authenticate with Google</a>');
+//     } catch (error) {
+//         console.error(error.message);
+//     }
+// })
+
+// //protected route 
+
+// app.get('/user/units', (req, res) => {
+//     try {
+//         res.send('hello!')
 //     } catch (error) {
 //         console.error(error.message);
 //     }
