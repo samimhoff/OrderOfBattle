@@ -10,18 +10,19 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
-//middleware
+//=======================MIDDLEWARE===============================//
 
-app.use(cors({
-    origin: "http://localhost:3000", //<--- pointed to client 
-    credentials: true
-}));
+
 
 //NOT SURE if there's any difference between these, but passport video said to use bottom
 // app.use(express.json());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cors({
+    origin: "http://localhost:3000", //<--- pointed to client 
+    credentials: true
+}));
 
 app.use(session({
     secret: "secretcode",
@@ -30,8 +31,9 @@ app.use(session({
 }))
 
 app.use(cookieParser("secretcode"))
-
-
+app.use(passport.initialize());
+app.use(passport.session());
+require('./passportConfig')(passport);
 
 
 //ROUTES//
@@ -42,15 +44,33 @@ app.use(cookieParser("secretcode"))
 
 //***NOTE: the table for user is client (client_id, username, password) */
 
-app.post("/login/", (req, res) => {
+app.post("/login/", (req, res, next) => {
+    console.log('log in attempt');
     try {
-        console.log(req.body);
+        passport.authenticate("local", (err, user, info) => {
+            if (err) {
+                console.log('error authenticating', err);
+                res.send(false);
+            }
+            if (!user){
+                res.send(false); 
+            } else {
+                req.logIn(user, err => {
+                    if (err) {
+                        console.log('error after login attempt', err);
+                        res.send(false);
+                    }
+                    res.send('Successfully Authenticated');
+                    console.log('req user in login: ', req.user);
+                })
+            }
+        })(req, res, next);
     } catch (error) {
         console.error(error.message);
     }
 })
 
-app.post("/register/", async(req, res) => {
+app.post("/register/", async (req, res) => {
     const {username, password} = req.body;
     try {
         //check if username already exists
@@ -72,6 +92,22 @@ app.post("/register/", async(req, res) => {
     }
 })
 
+//Authenticate the user here:
+app.get("/userone/", (req, res) => {
+    try {
+        res.send(req.user); // The req.user stores the entire user that has been authenticated inside it
+    } catch (error) {
+        console.error(error.message);
+    }
+})
+
+//Logout user.
+app.get('/logout/', (req, res, next) => {
+    req.logout;
+    res.send('logged out!');
+})
+
+//GET ALL USERS (only for checking. Delete once website created)
 app.get("/users/all", async (req, res) => {
     try {
         const existingUsers = await pool.query(`SELECT * FROM client`);
@@ -80,6 +116,8 @@ app.get("/users/all", async (req, res) => {
         console.error(error.message);
     }
 })
+
+
 //===================================================================
 //----------------------------WEAPONS--------------------------------
 //===================================================================
@@ -129,7 +167,6 @@ app.post("/weapons/", async(req, res) => {
             photo]
         )
         res.json(weaponPosted.rows);
-        console.log(req.body);
     } catch (err) {
         console.error(err.message);
     }
@@ -256,7 +293,6 @@ app.post("/individuals/", async(req, res) => {
 app.get("/units/", async(req, res) => {
     try {  
         const allUnits = await pool.query("SELECT * FROM unit");
-        console.log('units rows: ', allUnits.rows);
         res.json(allUnits.rows);
     } catch (err) {
         console.error(err.message);
